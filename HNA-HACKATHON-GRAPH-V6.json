@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 3,
+  "requirementsRevision": 6,
+  "architecture": {
+    "decisions": [
+      "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning.",
+      "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+      "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs."
+    ],
+    "components": [
+      "T001 laneA official2DGS mesh; T002 laneB installed LingBot NEW-video quick fallback then DA3 if ready; T006 independent CPU tester; T007 CPU-only minimal viewer builder. Old unstarted T003/T004/T005 deferred."
+    ],
+    "interfaces": [
+      "T001/T002 publish exact-attempt real GLB/PLY/OBJ, cameras/depth, source hashes and previews; T007 consumes actual file paths; T006 tests actual files and live viewer, publishes source comparisons.",
+      "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning."
+    ],
+    "dataStores": [
+      "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771 private outputs; no media/model data in source Git."
+    ],
+    "deployment": [
+      "T007 build portable static viewer bundle with dependencies local. Run via private loopback only, publish exact startup/port and artifact package. Coordinate with T006. Supervisor retrieves package for laptop."
+    ],
+    "crossCutting": [
+      "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+      "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs.",
+      "All PE coding/GPU/deployment through HNA workers. You are not alone; own assigned paths, preserve others' dirty source, do not reset/clean/stash/restart shared services. Research official docs before integration and record exact URLs.",
+      "T001 owns lane A; T002 owns lane B. Only these two tickets submit GPU jobs. Each lane allows at most one active/pending job, globally <=2. Each job exactly 1 H100-47 slice,32G host memory,4CPUs,<=45 minutes. Reconcile scheduler and saved receipts before submit; no duplicate job. Keep existing initial+3 revisions per candidate, no budget reset.",
+      "Private media,weights,models,logs and images stay outside Git under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>. Source-only worktree commits. Keep attempt manifests and progress-Txxx.json with jobIDs,stage,source/input/artifact hashes,timing,errors and actual preprocessing transforms.",
+      "Fixed zero-based new source frames 0,95,142,189,284,331,379,473,568,663 with actual decoded timestamps. Old original frame references are obsolete for NEW input. Publish appearance plus flat surface/depth comparison early. Unknown areas remain missing; no generative filling, no calibrated scale or centimetre claims.",
+      "Independent Playwright-capable T006 owns all objective live-output/viewer testing. Builders provide diagnostics not acceptance. Codex reviews actual images. Keep awaiting_review if no deployed exact-attempt review contract; numerical metric, exit zero and queued handoff are not quality pass.",
+      "No purchases, no external private media uploads, no password-file access, no public bridge. Official2DGS and DA3 Nested/Giant have noncommercial restrictions; do not label whole pipeline unrestricted open source. Own original viewer source may be permissively licensed; provide upstream notices and exact model licence.",
+      "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision."
+    ],
+    "failureModes": [
+      "If COLMAP insufficient registration, use NEW T002 LingBot/DA3 poses with labelled source. Original brennan-video.pt is WRONG room and forbidden for this run.",
+      "An exportable point cloud is a labelled fallback, not mesh. Actual mesh must have nonempty triangle faces. Avoid large triangles across depth discontinuities; preserve unobserved gaps."
+    ],
+    "observability": [
+      "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-Txxx.json and per-attempt experiment.json. First real artifact immediately."
+    ],
+    "security": [
+      "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision."
+    ],
+    "validation": [
+      "T006 checks actual source hash,finite geometry,faces,load/export integrity and live browser orbit/reset/download. Codex checks actual source fidelity. Physical measurement unverified."
+    ]
+  },
+  "tickets": [
+    {
+      "id": "T001",
+      "kind": "build",
+      "title": "Run official 2D Gaussian Splatting first and export mesh",
+      "brief": "Implement and RUN the first actual 2DGS attempt now. Own GPU lane A. Reuse installed tools and input, obtain COLMAP camera estimates, then train official hbb1/2d-gaussian-splatting and export its surface mesh. Start a bounded preview run and publish comparison images immediately. This is execution, not another planning ticket.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning.",
+          "Deadline priority actual official2DGS mesh from NEW video. Check probe job1048069 before GPU submit. Use NEW T002 poses if COLMAP fails. Short preview/export before longer quality improvement."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-*.json",
+          "Existing installed tools and weights; preserve source and ongoing work."
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T001.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>/experiment.json and real artifacts"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+          "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs.",
+          "All PE coding/GPU/deployment through HNA workers. You are not alone; own assigned paths, preserve others' dirty source, do not reset/clean/stash/restart shared services. Research official docs before integration and record exact URLs.",
+          "T001 owns lane A; T002 owns lane B. Only these two tickets submit GPU jobs. Each lane allows at most one active/pending job, globally <=2. Each job exactly 1 H100-47 slice,32G host memory,4CPUs,<=45 minutes. Reconcile scheduler and saved receipts before submit; no duplicate job. Keep existing initial+3 revisions per candidate, no budget reset.",
+          "Private media,weights,models,logs and images stay outside Git under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>. Source-only worktree commits. Keep attempt manifests and progress-Txxx.json with jobIDs,stage,source/input/artifact hashes,timing,errors and actual preprocessing transforms.",
+          "Fixed zero-based new source frames 0,95,142,189,284,331,379,473,568,663 with actual decoded timestamps. Old original frame references are obsolete for NEW input. Publish appearance plus flat surface/depth comparison early. Unknown areas remain missing; no generative filling, no calibrated scale or centimetre claims.",
+          "Independent Playwright-capable T006 owns all objective live-output/viewer testing. Builders provide diagnostics not acceptance. Codex reviews actual images. Keep awaiting_review if no deployed exact-attempt review contract; numerical metric, exit zero and queued handoff are not quality pass.",
+          "No purchases, no external private media uploads, no password-file access, no public bridge. Official2DGS and DA3 Nested/Giant have noncommercial restrictions; do not label whole pipeline unrestricted open source. Own original viewer source may be permissively licensed; provide upstream notices and exact model licence.",
+          "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision.",
+          "File ownership: scripts/room_compare/surface_2dgs/**,docs/room_compare/2dgs.md"
+        ],
+        "verification": [
+          "T006 independently checks mesh finite vertices/faces, camera convention, actual source coverage and image alignment; Codex visual review required."
+        ]
+      },
+      "dod": [
+        "Official 2DGS actually submitted through HNA or a precise installation/registration blocker recorded after bounded repair; no fabricated run.",
+        "Mesh and eight fixed-view evidence images published if run succeeds; surface gaps and scale uncertainty retained.",
+        "At most one active/pending lane-A job; receipt and digest preserved; no stale duplicate job."
+      ]
+    },
+    {
+      "id": "T002",
+      "kind": "build",
+      "title": "Run Depth Anything 3 camera/depth comparison in parallel",
+      "brief": "Own GPU lane B. Install or reuse official DA3 and RUN one comparable depth/camera reconstruction while T001 works. Prefer a currently accessible official model with its exact version/license recorded. Use proportional portrait handling; output observed geometry and camera estimates that 2DGS can optionally consume. Do not turn this into a prerequisite for T001 or wait for the HNA loop project.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning.",
+          "FIRST RUN already installed LingBot on NEW video as quick insurance. Preserve portrait field of view/coordinate map, publish new predictions/cameras/depth for T001 and actual triangle mesh export with depth-discontinuity rejection; also labelled pointcloud fallback. Then DA3 if downloaded/ready. No old predictions; no masks or other model survey."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-*.json",
+          "Existing installed tools and weights; preserve source and ongoing work."
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T002.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>/experiment.json and real artifacts"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+          "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs.",
+          "All PE coding/GPU/deployment through HNA workers. You are not alone; own assigned paths, preserve others' dirty source, do not reset/clean/stash/restart shared services. Research official docs before integration and record exact URLs.",
+          "T001 owns lane A; T002 owns lane B. Only these two tickets submit GPU jobs. Each lane allows at most one active/pending job, globally <=2. Each job exactly 1 H100-47 slice,32G host memory,4CPUs,<=45 minutes. Reconcile scheduler and saved receipts before submit; no duplicate job. Keep existing initial+3 revisions per candidate, no budget reset.",
+          "Private media,weights,models,logs and images stay outside Git under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>. Source-only worktree commits. Keep attempt manifests and progress-Txxx.json with jobIDs,stage,source/input/artifact hashes,timing,errors and actual preprocessing transforms.",
+          "Fixed zero-based new source frames 0,95,142,189,284,331,379,473,568,663 with actual decoded timestamps. Old original frame references are obsolete for NEW input. Publish appearance plus flat surface/depth comparison early. Unknown areas remain missing; no generative filling, no calibrated scale or centimetre claims.",
+          "Independent Playwright-capable T006 owns all objective live-output/viewer testing. Builders provide diagnostics not acceptance. Codex reviews actual images. Keep awaiting_review if no deployed exact-attempt review contract; numerical metric, exit zero and queued handoff are not quality pass.",
+          "No purchases, no external private media uploads, no password-file access, no public bridge. Official2DGS and DA3 Nested/Giant have noncommercial restrictions; do not label whole pipeline unrestricted open source. Own original viewer source may be permissively licensed; provide upstream notices and exact model licence.",
+          "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision.",
+          "File ownership: scripts/room_compare/da3/** and scripts/room_compare/baseline/**,docs/room_compare/da3.md"
+        ],
+        "verification": [
+          "T006 checks real output shapes, finite values, transforms, timestamp mapping and declared scale; Codex compares visible geometry."
+        ]
+      },
+      "dod": [
+        "Actual DA3 job result and images, or concrete access/runtime blocker; no claim that learned metric depth certifies real measurements.",
+        "One job maximum in lane B; cap and receipts honored.",
+        "Share source camera/depth format and evidence paths immediately for later association."
+      ]
+    },
+    {
+      "id": "T006",
+      "kind": "build",
+      "title": "Independent live-output tester and side-by-side review bundle",
+      "brief": "You are the independent Playwright-capable TESTING agent, separate from all reconstruction builders. Own no model implementation. Begin by checking existing baseline and preparing a private live viewer plus incremental evidence collection; watch actual progress/artifacts as T001-T005 finish. Use Playwright for deterministic viewer loading/selection/export checks, never mocks. Publish first source-versus-2DGS comparison as soon as T001 produces it; do not wait for every method. Final comparison includes source, baseline, each actual candidate, masks, object ownership, failure reasons, timings and hashes. Report tests without awarding visual acceptance; Codex reviews artifacts.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning.",
+          "Independent CPU tester only. Stop building viewer yourself; T007 owns viewer. Verify NEW source provenance, actual mesh triangle count finite data, real export roundtrip and live viewer controls/download using Playwright. Defer entity selection checks. Publish exact failures and source comparisons incrementally. Wait bounded for actual files; do not claim acceptance."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-*.json",
+          "Existing installed tools and weights; preserve source and ongoing work."
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T006.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>/experiment.json and real artifacts"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+          "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs.",
+          "All PE coding/GPU/deployment through HNA workers. You are not alone; own assigned paths, preserve others' dirty source, do not reset/clean/stash/restart shared services. Research official docs before integration and record exact URLs.",
+          "T001 owns lane A; T002 owns lane B. Only these two tickets submit GPU jobs. Each lane allows at most one active/pending job, globally <=2. Each job exactly 1 H100-47 slice,32G host memory,4CPUs,<=45 minutes. Reconcile scheduler and saved receipts before submit; no duplicate job. Keep existing initial+3 revisions per candidate, no budget reset.",
+          "Private media,weights,models,logs and images stay outside Git under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>. Source-only worktree commits. Keep attempt manifests and progress-Txxx.json with jobIDs,stage,source/input/artifact hashes,timing,errors and actual preprocessing transforms.",
+          "Fixed zero-based new source frames 0,95,142,189,284,331,379,473,568,663 with actual decoded timestamps. Old original frame references are obsolete for NEW input. Publish appearance plus flat surface/depth comparison early. Unknown areas remain missing; no generative filling, no calibrated scale or centimetre claims.",
+          "Independent Playwright-capable T006 owns all objective live-output/viewer testing. Builders provide diagnostics not acceptance. Codex reviews actual images. Keep awaiting_review if no deployed exact-attempt review contract; numerical metric, exit zero and queued handoff are not quality pass.",
+          "No purchases, no external private media uploads, no password-file access, no public bridge. Official2DGS and DA3 Nested/Giant have noncommercial restrictions; do not label whole pipeline unrestricted open source. Own original viewer source may be permissively licensed; provide upstream notices and exact model licence.",
+          "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision.",
+          "File ownership: tests/room_compare/** and scripts/room_compare/review_bundle/**"
+        ],
+        "verification": [
+          "Real input SHA256 and actual export/face validity, exact artifact-bound independent live browser test with screenshot and download digest. No mocked artifact pass. New bedroom source-only comparison, avoid original room."
+        ]
+      },
+      "dod": [
+        "Incremental side-by-side PNGs and an artifact manifest bind every displayed result to exact attempts and source hash.",
+        "Independent actual-output and live Playwright test results present, including failures; no mock-only pass.",
+        "No GPU jobs; no source implementation ownership; all visual verdicts remain awaiting Codex until exact evidence reviewed."
+      ]
+    },
+    {
+      "id": "T007",
+      "kind": "build",
+      "title": "Build portable hackathon room viewer and export download",
+      "brief": "CPU-only builder. Own viewer/** and docs/hackathon/**. Build a minimal polished viewer that loads actual NEW-video mesh outputs from T001/T002. Orbit, zoom, reset, original source comparisons, clear Download 3D model link. Bundle dependencies for laptop portability. No fake geometry or placeholder success. Ship a simple demo before 15:55 Singapore. Coordinate exact output/start command with independent T006 tester.",
+      "userFacing": true,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "uxTest": {
+        "instructions": "[USER-TEST] After T006 verifies real video input -> generated geometry -> preview/download, provide runnable URL and ask user whether it is clear enough to present. Never assign objective checks to user.",
+        "scenarios": [
+          "Choose phone video, generate model, rotate/inspect and download. Judge clarity and presentation."
+        ],
+        "previewCommand": "Provided by builder after live private viewer starts"
+      },
+      "context": {
+        "architectureRefs": [
+          "https://threejs.org/docs/pages/GLTFLoader.html",
+          "https://threejs.org/docs/pages/PLYLoader.html",
+          "https://threejs.org/docs/pages/OrbitControls.html"
+        ],
+        "decisions": [
+          "Latest user: simple phone-video input -> respectable real3D model -> preview/download; noncommercial hackathon showcase. No entities, measurements or editing. Same deadline/caps. T002 first generate NEW-video actual asset, then expose reusable single-video-path conversion runner with laneB locking/receipts/resource caps. T007 tiny private Choose video/Generate/status/Preview/Download flow in viewer/** invoking only T002 runner through HNA-managed process; serial one request; bounded files, no shell interpolation or arbitrary commands. Exact-hash cached result allowed only clearly labelled; never substitute unrelated geometry. T006 independently verifies true input-to-output hash and live flow. No new workers or PM planning.",
+          "Single-page static viewer, no account/upload/backend/mobile requirement. Honest labels: observed reconstruction, unknown scale, no entity selection. No detector UI. Real source/model side-by-side. Warm neutral simple visual design; focus on room canvas and download. Use installed tools if possible, read official docs before integration."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T001.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T002.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771 actual GLB/PLY and still frames from workers"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/demo portable static bundle and source files",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/progress-T007.json with viewer URL/start command/assets used",
+          "docs/hackathon/README.md and THIRD_PARTY_NOTICES.md; original source licence distinct from upstream",
+          "Minimal runnable video-input flow with real conversion/status and actual output. Disclose integration blocker rather than fake conversion."
+        ],
+        "interfaces": [
+          "Accept local actual mesh GLB/PLY path; PLY with faces as Mesh, without faces labelled Point cloud. Display artifact source/method/hash. Local packaged dependencies, not CDN-only. Never embed private video/models in Git."
+        ],
+        "constraints": [
+          "User has accepted hard two-hour hackathon deadline: 2026-10-31 15:55 Singapore (07:55 UTC). Deliver actual exportable observed 3D asset and simple viewer before this. Prioritize mesh and real demonstration. Defer object detection/selection, remaining comparisons and full review-loop product work.",
+          "NEW input /home/b/brenowy/brennan_work/lingbot-map/incoming/video6280786605452042171.mp4, SHA256 ad7a7771cf339dd78dc19963ab0fc998322a150170a8d0b971d78242502eef14; upload checksum verified. 711 decoded frames,720x1280,23.8361s. Different BEDROOM with wardrobe, desk, red stool/chair, dark chair, bed/window and door. NEVER reuse previous video's predictions/poses. Preserve all old evidence and jobs.",
+          "All PE coding/GPU/deployment through HNA workers. You are not alone; own assigned paths, preserve others' dirty source, do not reset/clean/stash/restart shared services. Research official docs before integration and record exact URLs.",
+          "T001 owns lane A; T002 owns lane B. Only these two tickets submit GPU jobs. Each lane allows at most one active/pending job, globally <=2. Each job exactly 1 H100-47 slice,32G host memory,4CPUs,<=45 minutes. Reconcile scheduler and saved receipts before submit; no duplicate job. Keep existing initial+3 revisions per candidate, no budget reset.",
+          "Private media,weights,models,logs and images stay outside Git under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-hackathon-ad7a7771/<method>/<attempt>. Source-only worktree commits. Keep attempt manifests and progress-Txxx.json with jobIDs,stage,source/input/artifact hashes,timing,errors and actual preprocessing transforms.",
+          "Fixed zero-based new source frames 0,95,142,189,284,331,379,473,568,663 with actual decoded timestamps. Old original frame references are obsolete for NEW input. Publish appearance plus flat surface/depth comparison early. Unknown areas remain missing; no generative filling, no calibrated scale or centimetre claims.",
+          "Independent Playwright-capable T006 owns all objective live-output/viewer testing. Builders provide diagnostics not acceptance. Codex reviews actual images. Keep awaiting_review if no deployed exact-attempt review contract; numerical metric, exit zero and queued handoff are not quality pass.",
+          "No purchases, no external private media uploads, no password-file access, no public bridge. Official2DGS and DA3 Nested/Giant have noncommercial restrictions; do not label whole pipeline unrestricted open source. Own original viewer source may be permissively licensed; provide upstream notices and exact model licence.",
+          "Do not wait for separate HNA loop project or another broad planning cycle. Use bounded fixes and small complete writes. Current user request authorizes this deadline scope. Keep GitHub repo private pending explicit publication decision.",
+          "CPU only, no GPU submission. You are not alone; preserve others changes and own viewer/** docs/hackathon/** only. T006 independently tests your live app. Provide self-contained download/export original model bytes."
+        ],
+        "verification": [
+          "Independent T006 Playwright test against your real running viewer and actual generated asset; orbit/reset/download content digest, no console/network failure. Mark user-facing result needs_ux after objective pass, do not self-certify taste."
+        ]
+      },
+      "dod": [
+        "Actual room model loaded and manipulable through camera orbit/zoom with reset.",
+        "Download delivers actual nonempty verified model, labels and source comparison truthful.",
+        "Portable package/start instructions and exact licence attribution provided; independent tester live run passes, then [USER-TEST] human taste scenario."
+      ]
+    }
+  ]
+}
