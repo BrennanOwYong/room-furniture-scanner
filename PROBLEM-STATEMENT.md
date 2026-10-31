@@ -8,7 +8,41 @@ Interior designers helping clients replace furniture need a usable record of the
 
 How might we help a person with no scanning experience turn a short phone capture into an inspectable room where a designer can select furniture, review the evidence for its dimensions, and compare replacements available locally?
 
-The first product should guide capture and expose uncertainty. It should request a useful extra view when evidence is missing, and use confirmed measurements when automatic estimates cannot support a purchasing decision.
+The first product should guide capture and expose uncertainty. It should request a useful extra view when evidence is missing, and use confirmed measurements when automatic estimates cannot support a purchasing decision. The baseline must work without a dedicated LiDAR scanner on supported Android phones. Dedicated depth hardware is an optional improvement; broad camera-only device support remains a separate capability to validate.
+
+## Two engineering problems
+
+### 1. World generation
+
+Reconstruct a stable room from overlapping camera observations. Google's ARCore depth-from-motion is the first Android capture alternative to benchmark against the existing video-only LingBot-Map experiment. Moving the camera changes the apparent positions of nearby and distant surfaces by different amounts, called parallax (the change in apparent position between viewpoints). ARCore combines camera tracking with phone motion sensors and can estimate depth without a dedicated depth sensor on supported devices. Translating around the room provides useful viewpoints; rotating in place does not reveal hidden surfaces.
+
+Depth images alone do not constitute a complete room. Combine them using each frame's camera position, orientation, lens calibration, time, and confidence; reject unreliable observations and check alignment when revisiting a location. Preserve unknown areas. Gaussian splatting can then supply a navigable appearance layer, while separate surface geometry supports dimensions and collision checks.
+
+Google's Raw Depth application programming interface (API) supplies depth and confidence, with incomplete pixel coverage. Google identifies reconstruction and measurement as uses for it. The full depth output fills more pixels through smoothing and interpolation, which is useful for display but should not be treated as equally reliable measured geometry. Neither output guarantees furniture purchasing accuracy.
+
+An ordinary uploaded video does not provide the synchronized tracking and depth data needed for this approach. The capture app must deliberately save camera frames, camera transforms, calibration, numeric depth, confidence, and timestamps. Verify export and replay rather than assuming a session recording preserves every required field.
+
+An infrared remote-control transmitter sends signals; it is not a depth camera. Proximity sensors detect nearby obstructions and cannot supply a room-shaped depth image. Software cannot add the missing ranging hardware. Check the exact device's ARCore depth support and any exposed depth sensor before choosing the capture path.
+
+### 2. Entity bounding
+
+Identify individual objects and maintain their identities across views. Image segmentation (assigning image pixels to an object) supplies a tighter boundary than a rectangular detection box. Track the table across frames, associate its visible pixels with reconstructed surfaces, and save one persistent table identifier.
+
+Each entity needs its category, observed geometry, selection boundary, position, orientation, estimated dimensions, uncertainty, and links to its source views. A three-dimensional bounding box is useful for a rough fit estimate; it does not describe the exact outline or separate table legs from nearby chairs. Keep selection geometry and purchasing measurements explicit. Missing backs and undersides may be generated for preview, with inferred surfaces labelled separately.
+
+These workstreams share a common room coordinate system and source observations. Either can fail independently: a stable room can have incorrect object labels, and a correctly identified table can have inaccurate reconstructed dimensions. Evaluate them separately before combining them.
+
+## First Android comparison
+
+Capture the same room on a supported Android phone without dedicated depth hardware, with real reference measurements and repeated scans:
+
+| Route | Input | Question |
+|---|---|---|
+| Existing baseline | Ordinary video and LingBot-Map | What can an upload alone recover? |
+| Tracked capture | Camera images, calibration, and phone camera tracking | Does measured camera motion improve alignment? |
+| Depth capture | Tracked capture plus raw depth and confidence | Does confidence-filtered depth improve surfaces and dimensions? |
+
+Compare geometry before adding Gaussian rendering. Measure visible-surface coverage, alignment drift, repeated-scan consistency, dimension errors, capture failures, processing time, and phone heating. Test a blank wall, reflective surface, thin table legs, and incomplete coverage. Then use the best geometry route for one selectable table. Capture guidance and selection retain the [USER-TEST] breakpoints below. This comparison is proposed; no Android capture experiment has yet been run.
 
 ## First user and decision
 
@@ -105,6 +139,11 @@ Reviewed 31 October 2026. Experiments used upstream LingBot-Map commit `b9dd1b1d
 - [React Native platform integration](https://reactnative.dev/docs/native-platform)
 - [Apple RoomPlan](https://developer.apple.com/augmented-reality/roomplan/)
 - [Google ARCore depth](https://developers.google.com/ar/develop/depth)
+- [Google Raw Depth and confidence](https://developers.google.com/ar/develop/java/depth/raw-depth)
+- [ARCore device and depth support](https://developers.google.com/ar/devices)
+- [ARCore recording and playback](https://developers.google.com/ar/develop/recording-and-playback)
+- [Android infrared transmitter](https://developer.android.com/reference/android/hardware/ConsumerIrManager)
+- [Android position and proximity sensors](https://developer.android.com/develop/sensors-and-location/sensors/sensors_position)
 - [SAM 3](https://github.com/facebookresearch/sam3)
 - [SAM 3D Objects](https://github.com/facebookresearch/sam-3d-objects)
 - [SAM 3D Objects setup and checkpoint access](https://github.com/facebookresearch/sam-3d-objects/blob/main/doc/setup.md)
