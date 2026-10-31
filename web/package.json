@@ -1,0 +1,8 @@
+{
+  "name": "lingbot-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.mjs", "prepare-assets": "node scripts/prepare-assets.mjs", "build:pages": "node scripts/build-pages.mjs" },
+  "dependencies": { "three": "0.180.0" }
+}

@@ -1,0 +1,12 @@
+node_modules/
+runtime/
+outputs/
+research/
+*.zip
+*.tar.gz
+public/vendor/
+public/sample/
+public/gallery/
+dist-pages/
+test-results/
+__pycache__/

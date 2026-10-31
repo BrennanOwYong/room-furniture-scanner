@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LingBot Studio · A room from your video</title>
+<meta name="description" content="Explore room models reconstructed from phone videos, compare saved results, and download the 3D assets.">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./studio-polish.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="./" aria-label="LingBot Studio home"><span class="brand-mark" aria-hidden="true">L</span> LingBot <span>Studio</span></a><div id="connection" class="connection" role="status"><span></span>Loading studio</div></header>
+<main>
+  <section class="intro"><p class="eyebrow">VIDEO TO SPACE</p><h1>Your room, from a new angle.</h1><p id="intro-copy">Explore the recordings, compare reconstructed models, and take a result with you.</p></section>
+  <div class="workspace">
+    <aside class="sidebar">
+      <section class="recording-gallery" aria-labelledby="gallery-heading">
+        <div class="section-title"><span class="step">01</span><h2 id="gallery-heading">Explore recordings</h2><span id="recording-count" class="recording-count"></span></div>
+        <label for="recording-select">Recording</label>
+        <select id="recording-select" aria-describedby="recording-description" disabled><option>Loading recordings…</option></select>
+        <p id="recording-description" class="recording-description"></p>
+        <p id="recording-filename" class="recording-filename"></p>
+        <label for="result-select">Reconstruction result</label>
+        <select id="result-select" disabled><option>Select a recording</option></select>
+        <p id="selection-status" class="selection-status" role="status" aria-live="polite"></p>
+        <details id="capture-details" class="capture-details" hidden><summary>Capture details</summary><dl><dt>Input fingerprint (SHA-256)</dt><dd id="source-sha"></dd><dt>Model fingerprint (SHA-256)</dt><dd id="result-sha"></dd></dl></details>
+      </section>
+      <section id="showcase-note" class="showcase-note" hidden><h2>Explore recorded results.</h2><p>New video processing runs in the local app. This page lets you compare and download saved reconstructions.</p></section>
+      <p id="upload-error" class="error" role="alert" hidden></p>
+      <section id="upload-section" class="upload-section" hidden><div class="section-title"><span class="step">02</span><h2>Add your video</h2></div>
+        <label id="dropzone" class="dropzone" for="video-file"><span class="upload-symbol" aria-hidden="true">↑</span><strong id="file-label">Choose a phone video</strong><span id="file-meta">or drop it here · MP4, MOV, WebM</span><span class="file-limits">Up to 60 seconds · 150 MB</span></label>
+        <input id="video-file" type="file" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm" class="file-input">
+        <video id="video-preview" controls playsinline hidden></video>
+        <label class="check-row"><input id="detect" type="checkbox" checked><span>Find furniture <small>Chairs, tables, beds and cabinets</small></span></label>
+        <button id="generate" class="button primary" disabled>Build room <span aria-hidden="true">↗</span></button>
+      </section>
+      <section id="progress-panel" class="progress-panel" hidden aria-live="polite"><div class="section-title"><span class="step">02</span><h2 id="progress-title">Processing your video</h2></div><progress id="upload-progress" max="100" value="0" hidden></progress><ol id="stages"><li data-stage="uploading">Upload video</li><li data-stage="queued">Wait for compute</li><li data-stage="reconstructing">Map the room</li><li data-stage="detecting">Find furniture</li><li data-stage="exporting">Prepare the model</li></ol><p id="job-message"></p><button id="check-status" class="text-button" hidden>Reconnect and check status</button></section>
+      <section id="capture-tips" class="capture-tips" hidden><h3>Give the model a good view.</h3><p>Walk slowly around furniture. Move sideways as well as turning. Keep the camera steady and include the floor.</p></section>
+      <p class="powered">Compare observed reconstructions.<br><a href="https://github.com/Robbyant/lingbot-map" target="_blank" rel="noopener">LingBot-Map source</a></p>
+    </aside>
+    <section class="result-area" aria-label="Room model">
+      <div class="viewer-toolbar"><div><span class="step">03</span><strong id="model-title">Your room model</strong></div><div class="viewer-actions"><button id="home-view" class="icon-button" disabled>Fit view</button><button id="top-view" class="icon-button" disabled>Top view</button><label class="marker-toggle"><input id="show-markers" type="checkbox" checked>Furniture labels</label></div></div>
+      <div id="viewport"><div id="scene"></div><div id="labels"></div><div id="empty-state"><div class="empty-room" aria-hidden="true"><span></span><span></span><span></span></div><h2>A new perspective awaits.</h2><p>Choose a recording and reconstruction result to explore it in 3D.</p></div><div id="viewer-loading" hidden role="status">Loading model…</div><p class="navigation-hint" id="navigation-hint" hidden>Drag to rotate · Scroll to zoom · Right-drag to move</p></div>
+      <div class="result-footer"><p id="model-summary">Observed surfaces only. Unseen areas may remain open.</p><a id="download" class="button download" hidden download>Download model ↓</a></div>
+      <nav id="companion-downloads" class="companion-downloads" aria-label="More downloads for this result" hidden></nav>
+      <section id="objects-panel" class="objects-panel" hidden><div class="objects-heading"><h2>Furniture markers <span id="object-count"></span></h2><span>Estimated locations</span></div><div id="object-list" class="object-list"></div><p id="detection-note"></p><div id="object-detail" hidden><div class="evidence-wrap"><img id="evidence-image" alt="Source frame used for the selected detection"><div id="evidence-box"></div></div><div><h3 id="detail-title"></h3><p id="detail-copy"></p><button id="clear-selection" class="text-button">Show the whole room</button></div></div></section>
+    </section>
+  </div>
+</main>
+<footer class="page-footer"><span>Built from your recording.</span><span>Approximate geometry · Dimensions are not calibrated</span></footer>
+<script type="module" src="./app.js"></script>
+</body></html>
