@@ -20,6 +20,8 @@ The first cycle allows at most three revisions per candidate. Stop automatic ret
 
 ## Parallel candidates
 
+The current executable ordering is in `HNA-RUN-GRAPH.json`. Brennan subsequently prioritized official 2D Gaussian Splatting mesh export. T001 (2DGS/COLMAP), T002 (DA3) and T006 (independent testing) were dispatched through HNA's native ordered finalize on 31 October at 13:23 Singapore time. This records dispatch, not successful GPU execution or output acceptance. T001 then T004 share GPU lane A; T002 then T003 share lane B; each lane allows one active/pending GPU job. T005 association and T006 testing are CPU-only. Publish the first 2DGS evidence without waiting for the full comparison.
+
 | Workstream | Initial responsibility | Dependency |
 |---|---|---|
 | LingBot | Preserve the baseline; test portrait coverage and scale-reference settings independently | Shared immutable input manifest |
@@ -74,6 +76,21 @@ Assign each accepted object a stable identifier, category/confidence, supporting
 
 LingBot, DA3 and VGGT provide routes through camera/depth outputs. COLMAP first provides cameras and sparse feature points; dense reconstruction or another validated depth stage is needed for usable object surfaces. Splatfacto supplies Gaussian appearance and needs a separate ownership/geometry layer. 2D Gaussian Splatting supplies surface-oriented reconstruction with mesh export. Future ARCore capture can supply tracked cameras and depth with confidence, but still requires measured checks for drift and scale accuracy.
 
+## 2DGS quality and capture design
+
+2D Gaussian Splatting represents surfaces with oriented flat disks in three-dimensional space. Its official implementation extracts a mesh by combining rendered depths. This adds extraction errors to the upstream camera and reconstruction errors: voxel size, depth truncation, mean/median depth choice and camera conventions can change holes, thin supports and surface continuity. A mesh file alone proves neither accurate dimensions nor separate object identities.
+
+Diagnose failures in order: source-image coverage and sharpness; camera registration and calibration; depth/surface consistency; mesh extraction; object assignment. Use flat-shaded and depth views alongside colour renders. Avoid smoothing or hole-filling that removes observed openings. Save every change so a meshing change can be compared using the same trained scene. Check distortion correction, principal-point handling and pixel-centre conventions against the installed versions, with camera parameters updated for every resize or crop.
+
+The following capture features are proposed product work, not implemented by the current comparison tickets:
+
+- [USER-TEST] Guided room walk with overlapping views, sideways movement, return to a previously seen area, and a second height pass when the floor or furniture supports are missing. Live prompts should ask for one concrete movement at a time, and highlight missing coverage. Include furniture backs and room corners only when physically visible; retain inaccessible areas as unknown.
+- [USER-TEST] Automatic frame selection and capture feedback for blur, insufficient movement, lost tracking and unsupported surfaces. Preserve camera calibration and phone motion data in a native capture session, with ordinary video import as a less-informative path. Avoid zoom/lens switching within a scan. Confidence is an estimate whose reliability must itself be tested.
+- [USER-TEST] Scale confirmation using a known physical length or calibrated target when needed. Use separate reference measurements to validate dimensions. Tracked phone motion can provide metric information but is not a guarantee of exact dimensions. Do not infer real scale from assumed furniture sizes.
+- [USER-TEST] Select an observed table/chair in the exported room, show coverage and dimension status, then move/rotate/hide that object while keeping the captured original recoverable. Distinguish a shopping replacement preview from a measured scan. Request more capture before claiming an unseen boundary or a tight fit.
+
+At implementation breakpoints, use the required scenario card for subjective interaction feedback; the independent testing agent first verifies correctness on the real app. No subjective approval is required to continue the already authorized reconstruction experiments.
+
 ## Initial resource bounds
 
 At most two concurrent GPU jobs across the reconstruction work, one H100 47 GB slice per job, 32 GB host memory, four processor cores and no more than 45 minutes per job. These are requested caps, not a guarantee of current availability. Use shorter jobs where possible. HNA must check live limits and available resources, store scheduler receipts and avoid duplicate submissions. Avoid holding a GPU while waiting for a visual review.
@@ -96,6 +113,10 @@ Checked 31 October 2026. Builders must pin the exact source/model versions used.
 - [COLMAP camera and point formats](https://colmap.github.io/format.html)
 - [Nerfstudio Splatfacto](https://docs.nerf.studio/nerfology/methods/splat.html)
 - [2D Gaussian Splatting training and mesh export](https://github.com/hbb1/2d-gaussian-splatting#testing)
+- [2D Gaussian Splatting surface representation](https://surfsplatting.github.io/)
+- [2D Gaussian Splatting camera and broken-mesh notes](https://github.com/hbb1/2d-gaussian-splatting#faq)
+- [COLMAP camera calibration conventions](https://colmap.github.io/faq.html#using-calibration-from-opencv-kalibr-or-other-tools)
+- [ARCore camera and phone-motion tracking](https://developers.google.com/ar/develop/fundamentals#motion_tracking)
 - [VGGT Omega checkpoint access](https://github.com/facebookresearch/vggt-omega#pretrained-models)
 - [Grounding DINO category detection](https://github.com/IDEA-Research/GroundingDINO)
 - [ScanNet++ data and evaluation](https://scannetpp.mlsg.cit.tum.de/scannetpp/)

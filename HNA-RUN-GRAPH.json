@@ -1,0 +1,449 @@
+{
+  "schemaVersion": 3,
+  "requirementsRevision": 4,
+  "architecture": {
+    "decisions": [
+      "Supervisor owns the implementation plan. Prioritize official 2D Gaussian Splatting with exported polygon mesh; run DA3 camera/depth comparison concurrently. Stop product-discovery and broad roadmap rewriting.",
+      "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+      "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop."
+    ],
+    "components": [
+      "T001 lane A: COLMAP + official 2DGS first; T002 lane B: DA3; T003 lane B: entity masks; T004 lane A: remaining alternatives; T005 CPU object association; T006 independent CPU tester and comparison bundle."
+    ],
+    "interfaces": [
+      "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+    ],
+    "dataStores": [
+      "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review is private shared evidence; each worker owns separate method directories. Git contains only reusable source/docs. Every job receipt stored before waiting."
+    ],
+    "deployment": [
+      "Use HNA worktrees from current source. Read existing scripts/environments in /home/b/brenowy/brennan_work/lingbot-map without overwriting them. No public deployment. T006 may use a private loopback viewer for testing."
+    ],
+    "crossCutting": [
+      "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+      "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+      "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+      "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+      "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+      "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+      "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+      "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+      "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+      "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run."
+    ],
+    "failureModes": [
+      "COLMAP insufficient registration: record coverage and diagnostics; export a separately labelled LingBot-camera 2DGS attempt using existing outputs/brennan-video.pt if available, or DA3 output when ready. Do not misrepresent the camera source.",
+      "Dependency or model access failure gets a concrete bounded fix or terminal blocker; no repeated model surveys. No output means no acceptance."
+    ],
+    "observability": [
+      "Publish /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-<ticket>.json with stage, attempt IDs, job IDs, artifact paths and last progress time. Save short actionable logs, no secrets."
+    ],
+    "security": [
+      "No password-file access, credential disclosure, external private footage upload, shared hub restart, source reset, upstream push, purchase or generative completion."
+    ],
+    "validation": [
+      "T006 is a separate tester, uses real outputs and Playwright with an actual local viewer. Codex judges visual fidelity against the immutable 620-frame reference. Keep appearance, geometry consistency, entities and measured scale separate."
+    ]
+  },
+  "tickets": [
+    {
+      "id": "T001",
+      "kind": "build",
+      "title": "Run official 2D Gaussian Splatting first and export mesh",
+      "brief": "Implement and RUN the first actual 2DGS attempt now. Own GPU lane A. Reuse installed tools and input, obtain COLMAP camera estimates, then train official hbb1/2d-gaussian-splatting and export its surface mesh. Start a bounded preview run and publish comparison images immediately. This is execution, not another planning ticket.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Implement and RUN the first actual 2DGS attempt now. Own GPU lane A. Reuse installed tools and input, obtain COLMAP camera estimates, then train official hbb1/2d-gaussian-splatting and export its surface mesh. Start a bounded preview run and publish comparison images immediately. This is execution, not another planning ticket."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/brennan-video.pt",
+          "Existing scripts/run-video-pe.sh and installed environments, read-only reuse"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/2dgs/<attempt>/experiment.json",
+          "Exported actual mesh plus cameras, rendered source comparisons and depth/flat-shaded views",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T001.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: scripts/room_compare/surface_2dgs/** and docs/room_compare/2dgs.md"
+        ],
+        "verification": [
+          "T006 independently checks mesh finite vertices/faces, camera convention, actual source coverage and image alignment; Codex visual review required."
+        ]
+      },
+      "dod": [
+        "Official 2DGS actually submitted through HNA or a precise installation/registration blocker recorded after bounded repair; no fabricated run.",
+        "Mesh and eight fixed-view evidence images published if run succeeds; surface gaps and scale uncertainty retained.",
+        "At most one active/pending lane-A job; receipt and digest preserved; no stale duplicate job."
+      ]
+    },
+    {
+      "id": "T002",
+      "kind": "build",
+      "title": "Run Depth Anything 3 camera/depth comparison in parallel",
+      "brief": "Own GPU lane B. Install or reuse official DA3 and RUN one comparable depth/camera reconstruction while T001 works. Prefer a currently accessible official model with its exact version/license recorded. Use proportional portrait handling; output observed geometry and camera estimates that 2DGS can optionally consume. Do not turn this into a prerequisite for T001 or wait for the HNA loop project.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Own GPU lane B. Install or reuse official DA3 and RUN one comparable depth/camera reconstruction while T001 works. Prefer a currently accessible official model with its exact version/license recorded. Use proportional portrait handling; output observed geometry and camera estimates that 2DGS can optionally consume. Do not turn this into a prerequisite for T001 or wait for the HNA loop project."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4",
+          "Official DA3 model cards and API documentation"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/da3/<attempt>/experiment.json",
+          "Camera/depth/validity arrays and eight fixed-view comparisons",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T002.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: scripts/room_compare/da3/** and docs/room_compare/da3.md"
+        ],
+        "verification": [
+          "T006 checks real output shapes, finite values, transforms, timestamp mapping and declared scale; Codex compares visible geometry."
+        ]
+      },
+      "dod": [
+        "Actual DA3 job result and images, or concrete access/runtime blocker; no claim that learned metric depth certifies real measurements.",
+        "One job maximum in lane B; cap and receipts honored.",
+        "Share source camera/depth format and evidence paths immediately for later association."
+      ]
+    },
+    {
+      "id": "T003",
+      "kind": "build",
+      "title": "Identify and track room objects from the source video",
+      "brief": "Take GPU lane B after T002 terminates. RUN Grounding DINO category detection and accessible SAM 2.1 video masks on the immutable recording. Cover desk/table, distinct chairs, backpack, laptops, phone and bottle where supported; preserve wall/floor/whiteboard/glass context and flag uncertain categories. Keep people separate from static room. Prepare full-frame outlines and stable identities, starting with table/chair. Assisted seeds are allowed but must be labelled; do not claim automatic recognition from seeds.",
+      "userFacing": false,
+      "deps": [
+        "T002"
+      ],
+      "prerequisites": {
+        "tickets": [
+          "T002"
+        ],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Take GPU lane B after T002 terminates. RUN Grounding DINO category detection and accessible SAM 2.1 video masks on the immutable recording. Cover desk/table, distinct chairs, backpack, laptops, phone and bottle where supported; preserve wall/floor/whiteboard/glass context and flag uncertain categories. Keep people separate from static room. Prepare full-frame outlines and stable identities, starting with table/chair. Assisted seeds are allowed but must be labelled; do not claim automatic recognition from seeds."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4",
+          "Frame530 desk-positive pixels [334,252],[633,422], negatives [250,573],[127,665],[500,1040]; frame590 chair positives [200,422],[518,928],[389,646], backpack negative [499,300], floor [355,1060], desk [166,94]."
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/entities/<attempt>/experiment.json",
+          "Source-coordinate masks, identities, room inventory and overlay PNGs for all eight review frames",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T003.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: scripts/room_compare/entities/** and docs/room_compare/entities.md"
+        ],
+        "verification": [
+          "T006 compares independent visible-outline annotations where prepared, records overlap/boundary/identity leakage and unannotated gaps; SAM predictions are not reference truth."
+        ]
+      },
+      "dod": [
+        "Actual table/chair overlays and separate backpack evidence, with automatic versus assisted status explicit.",
+        "Room inventory reports observed, uncertain and unseen contents rather than claiming complete room capture.",
+        "One lane-B job maximum; geometry errors must not be hidden by clean masks."
+      ]
+    },
+    {
+      "id": "T004",
+      "kind": "build",
+      "title": "Run remaining comparison methods after the first mesh",
+      "brief": "Take lane A after T001, while entity masks use lane B. Run remaining approved comparisons sequentially within lane A: LingBot with portrait coverage correction, accessible original VGGT independent of DA3 success, COLMAP dense geometry and Nerfstudio Splatfacto using registered cameras. Record Omega as access-blocked unless weights are already approved, and ARCore as requiring new capture. If the first 2DGS pose source failed, one bounded revision with verified DA3 cameras is higher priority than Splatfacto. Publish each method as it finishes.",
+      "userFacing": false,
+      "deps": [
+        "T001",
+        "T002"
+      ],
+      "prerequisites": {
+        "tickets": [
+          "T001",
+          "T002"
+        ],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "Take lane A after T001, while entity masks use lane B. Run remaining approved comparisons sequentially within lane A: LingBot with portrait coverage correction, accessible original VGGT independent of DA3 success, COLMAP dense geometry and Nerfstudio Splatfacto using registered cameras. Record Omega as access-blocked unless weights are already approved, and ARCore as requiring new capture. If the first 2DGS pose source failed, one bounded revision with verified DA3 cameras is higher priority than Splatfacto. Publish each method as it finishes."
+        ],
+        "inputs": [
+          "T001/T002 camera and geometry records; immutable source video; official method docs"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/experiment.json",
+          "Same fixed-view comparison images and method-specific artifacts",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T004.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: scripts/room_compare/alternatives/** and docs/room_compare/alternatives.md"
+        ],
+        "verification": [
+          "T006 independently verifies real outputs and uniform comparisons. Codex reviews each actual artifact set."
+        ]
+      },
+      "dod": [
+        "Each listed runnable candidate has a real attempt or explicit blocker; accessible VGGT is not skipped because DA3 succeeded.",
+        "No more than one lane-A job; shared total stays <=2.",
+        "Timing, source/pose provenance, coverage and evidence hashes supplied per method."
+      ]
+    },
+    {
+      "id": "T005",
+      "kind": "build",
+      "title": "Associate observed objects with exportable geometry",
+      "brief": "CPU-only. Fuse original-image object masks into camera-aligned observed geometry with visibility/depth consistency. Prioritize the 2DGS mesh when available; associate stable object IDs with mesh faces or points. Retain uncertainty and avoid merging chair with backpack, desktop objects or floor. Export separately selectable observed table/chair assets plus a room scene and inventory. Missing hidden surfaces remain missing; no invented dimensions. Preserve alternatives if 2DGS unavailable.",
+      "userFacing": false,
+      "deps": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "prerequisites": {
+        "tickets": [
+          "T001",
+          "T002",
+          "T003"
+        ],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "CPU-only. Fuse original-image object masks into camera-aligned observed geometry with visibility/depth consistency. Prioritize the 2DGS mesh when available; associate stable object IDs with mesh faces or points. Retain uncertainty and avoid merging chair with backpack, desktop objects or floor. Export separately selectable observed table/chair assets plus a room scene and inventory. Missing hidden surfaces remain missing; no invented dimensions. Preserve alternatives if 2DGS unavailable."
+        ],
+        "inputs": [
+          "T001 2DGS mesh/cameras, T002 depth/cameras, T003 masks and identities"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/association/<attempt>/experiment.json",
+          "Object ownership data and room/object exports; geometry-coloured-by-object images",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T005.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: scripts/room_compare/association/** and docs/room_compare/association.md"
+        ],
+        "verification": [
+          "T006 loads actual exports in a local viewer, verifies distinct selection and transforms, and reports missing geometry."
+        ]
+      },
+      "dod": [
+        "Table and chair have persistent separate identities in actual export where evidence permits; documented blocker otherwise.",
+        "Mesh/point ownership and selection bounds retain source support, unknown areas and scale status.",
+        "No GPU submission from this ticket."
+      ]
+    },
+    {
+      "id": "T006",
+      "kind": "build",
+      "title": "Independent live-output tester and side-by-side review bundle",
+      "brief": "You are the independent Playwright-capable TESTING agent, separate from all reconstruction builders. Own no model implementation. Begin by checking existing baseline and preparing a private live viewer plus incremental evidence collection; watch actual progress/artifacts as T001-T005 finish. Use Playwright for deterministic viewer loading/selection/export checks, never mocks. Publish first source-versus-2DGS comparison as soon as T001 produces it; do not wait for every method. Final comparison includes source, baseline, each actual candidate, masks, object ownership, failure reasons, timings and hashes. Report tests without awarding visual acceptance; Codex reviews artifacts.",
+      "userFacing": false,
+      "deps": [],
+      "prerequisites": {
+        "tickets": [],
+        "environment": [],
+        "humanGates": []
+      },
+      "context": {
+        "architectureRefs": [
+          "https://github.com/hbb1/2d-gaussian-splatting#training",
+          "https://github.com/hbb1/2d-gaussian-splatting#testing",
+          "https://colmap.github.io/tutorial.html",
+          "https://colmap.github.io/format.html",
+          "https://github.com/ByteDance-Seed/Depth-Anything-3/blob/main/docs/API.md",
+          "https://github.com/facebookresearch/sam2",
+          "https://github.com/IDEA-Research/GroundingDINO",
+          "https://docs.nerf.studio/nerfology/methods/splat.html",
+          "https://github.com/facebookresearch/vggt",
+          "https://slurm.schedmd.com/sbatch.html"
+        ],
+        "decisions": [
+          "You are the independent Playwright-capable TESTING agent, separate from all reconstruction builders. Own no model implementation. Begin by checking existing baseline and preparing a private live viewer plus incremental evidence collection; watch actual progress/artifacts as T001-T005 finish. Use Playwright for deterministic viewer loading/selection/export checks, never mocks. Publish first source-versus-2DGS comparison as soon as T001 produces it; do not wait for every method. Final comparison includes source, baseline, each actual candidate, masks, object ownership, failure reasons, timings and hashes. Report tests without awarding visual acceptance; Codex reviews artifacts."
+        ],
+        "inputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-*.json",
+          "Actual per-attempt outputs from T001-T005",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/brennan-video.pt"
+        ],
+        "outputs": [
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/review/manifest.json",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/review/comparison-geometry.png",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/review/comparison-entities.png",
+          "Per-attempt objective test reports and local viewer screenshots",
+          "/home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/progress-T006.json"
+        ],
+        "interfaces": [
+          "Per-attempt experiment.json; original frame/timestamps; calibrated or explicitly unscaled camera/depth/surface records; masks in source coordinates; persistent object IDs; evidence images and hashes. Geometry and appearance separate."
+        ],
+        "constraints": [
+          "You are one HNA worker among other workers. Own only your assigned files; preserve others' edits, dirty source and existing artifacts. Never reset source or push to upstream.",
+          "Input is /home/b/brenowy/brennan_work/lingbot-map/incoming/video6278534805638358952.mp4, SHA256 a6b51a160106a1845fce1262e14aacc2ea89858917ea76ddb5217d5cdaa066c7, 620 portrait 720x1280 frames. Preserve actual presentation timestamps and original-image coordinate maps; no stretching or unrecorded crop.",
+          "All PE implementation, GPU submission and deployment stays inside these HNA workers. Use existing environments where compatible. Research official docs before new integration and save precise URLs. Do not wait for the separate review-loop implementation to start experiments.",
+          "GPU lane A is T001 followed by T004; lane B is T002 followed by T003. Only these tickets submit GPU work, at most ONE nonterminal GPU job per lane. T005 and T006 are CPU-only. Thus at most TWO reconstruction GPU jobs globally. Each job requests exactly one H100-47 slice, 32G host RAM, four CPUs, walltime <=45 minutes. Inspect current Slurm client/config and receipts before submitting; reconcile live/pending jobs by persisted ID and unique attempt name; never blindly retry.",
+          "At most initial attempt plus THREE revisions per candidate; preserve every attempt, stop at exhausted cap or unavailable access. No purchases, external private media uploads, unverified checkpoint mirrors, Marble or invented scene completion. ARCore cannot run on this ordinary MP4; Omega access blocker must not hold runnable methods.",
+          "Keep private video, extracted frames, weights, geometry, logs and rendered images outside Git, under /home/b/brenowy/brennan_work/lingbot-map/outputs/hna-room-review/<method>/<attempt>/. Commit source only. A candidate attempt can end awaiting_review, blocked or failed with concrete evidence. Finishing an implementation ticket must NOT claim visual acceptance of its model output.",
+          "Every attempt records source/config/checkpoint/input/artifact digests, source frames/timestamps, preprocessing/camera convention, scale status, resource use, scheduler ID, timings and exact failure reason. No centimetre claims: input has no surveyed geometry or calibrated scale. Existing baseline colour holdouts reused geometry and are not independent test views.",
+          "Incrementally publish real output images as soon as available, before polishing or long research. Fixed source views are frames 32,120,230,350,400,480,530,590 (zero-based); find actual timestamps. Include appearance, depth/validity and flat-shaded mesh where available. Explain missing views. Frame530 desk opening stays open; frame590 backpack remains separate from chair. Exclude people and reflection-derived false objects.",
+          "The independent Playwright-capable T006 testing agent owns deterministic verification of actual output/live local viewer; builders may supply diagnostics but cannot certify their own acceptance. Codex inspects returned images. Until the new HNA exact-attempt review contract is deployed, preserve awaiting_review and relay findings through the existing planner terminal; never invent a verdict or count exit zero as a visual pass.",
+          "Use HNA native ticket events to report completion/failure and release dependants. A properly documented access/capture blocker is a terminal candidate disposition, not a success. Do not strand all other methods because one candidate cannot run.",
+          "File ownership: tests/room_compare/** and scripts/room_compare/review_bundle/**"
+        ],
+        "verification": [
+          "Execute deterministic tests yourself as the independent agent; verify inputs/digests, original-coordinate mappings, actual mesh validity, loadability and table/chair selection on the live private viewer.",
+          "Do not manufacture physical ground truth or reference masks. State annotation coverage and unsupported measurements. Use stable original-frame references."
+        ]
+      },
+      "dod": [
+        "Incremental side-by-side PNGs and an artifact manifest bind every displayed result to exact attempts and source hash.",
+        "Independent actual-output and live Playwright test results present, including failures; no mock-only pass.",
+        "No GPU jobs; no source implementation ownership; all visual verdicts remain awaiting Codex until exact evidence reviewed."
+      ]
+    }
+  ]
+}
