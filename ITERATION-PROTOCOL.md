@@ -23,12 +23,14 @@ The first cycle allows at most three revisions per candidate. Stop automatic ret
 | Workstream | Initial responsibility | Dependency |
 |---|---|---|
 | LingBot | Preserve the baseline; test portrait coverage and scale-reference settings independently | Shared immutable input manifest |
-| Alternative reconstruction | Evaluate Depth Anything 3; use VGGT as an accessible fallback if needed | Shared frame selection and comparison convention |
+| Learned reconstruction | Evaluate Depth Anything 3 (DA3) and Visual Geometry Grounded Transformer (VGGT); Omega depends on checkpoint access | Shared frame selection and comparison convention |
+| Feature-based reconstruction and appearance | Evaluate COLMAP camera recovery and dense geometry, then Nerfstudio Splatfacto appearance | Shared frames; successful camera recovery |
+| Surface reconstruction | Evaluate 2D Gaussian Splatting and its exported mesh (a connected surface made of polygons) | Images with camera estimates; shared comparison convention |
 | Entity tracking | Prompt and track table/chair masks using accessible SAM 2.1 weights; separate backpack/person/background | Original images; best geometry only needed for later 3D association |
 | Evidence/testing | Validate outputs and assemble comparable review bundles | Candidate artifacts |
 | HNA review support | Add durable, project-scoped review and retry handling to the active parallel execution path | Existing HNA source and isolated live test project |
 
-ARCore Raw Depth needs appropriate phone capture data. It cannot be honestly benchmarked by labelling inferred depth from this ordinary video as ARCore output. World Labs Atlas is currently described through early access; availability to this account has not been established. Do not upload private footage to an external service without a separate, understood service choice.
+ARCore Raw Depth needs appropriate phone capture data. It cannot be honestly benchmarked by labelling inferred depth from this ordinary video as ARCore output. Following Brennan's clarification on 31 October, Marble and generative world completion are excluded from this comparison. The target is faithful reconstruction of observed room contents. Keep unseen regions unknown. No Marble login or private-footage upload is needed.
 
 ## Visual review criteria
 
@@ -46,6 +48,31 @@ Use the same evidence set for each candidate. For each criterion record unaccept
 ## Evidence limits
 
 The same clip is intentionally reused for development. A final withheld temporal segment can check degradation on unused images, but that is still a check within one scene. If its images were used to estimate geometry or camera poses, label that use. Keep geometry accuracy, source-image reconstruction, visual plausibility and selection consistency separate. No reference depth or surveyed camera path exists for this clip.
+
+## Accuracy comparison and its limits
+
+This is the required evaluation design, not a claim that these measurements have been implemented or collected. The completed evidence currently consists of the original LingBot run, the rough fixed-Gaussian fit, and the source-frame review. The alternatives have no accepted output yet.
+
+- Freeze one source manifest with actual timestamps, frame identities, original image coordinates and invertible resize/crop/padding maps. Use shared evaluation views. Report failed/unregistered frames and lost image coverage, rather than selecting only a method's successful views. Report any differences in input frame count, resolution, pose sources, compute and checkpoint access.
+- Compare appearance on buffered contiguous temporal segments withheld from fitting. Disclose separately whether withheld images influenced camera estimation or geometry. The old Gaussian baseline withheld some colour targets but used the complete sampled sequence for geometry; it is not an independent unseen-view test. Codex has already seen the whole clip, so subsequent visual review is not blind.
+- Measure geometric consistency through feature reprojection error (pixel displacement when a reconstructed feature is projected back into an image), agreement of depth across views, and drift or doubled surfaces on revisits. These are internal consistency checks, not proof of physical accuracy. Preserve visible openings, edges and foreground/background ordering; report missing coverage independently.
+- For object evaluation, prepare independently annotated visible outlines on fixed reference frames. Compare predicted masks (the pixels assigned to an object) using intersection over union, boundary error, identity switches and leakage into other objects. The model's own predictions and existing point prompts are not ground truth. Until independent outlines exist, report qualitative findings only. Frame 530 tests the desk opening; frame 590 tests separation of chair and backpack.
+- Physical dimensions require an external scale source and independent check measurements. A known length can establish global scale, but does not validate every shape. Report signed and absolute dimensional error against measurements that were not used for calibration. Without those measurements, keep dimensions unverified and avoid centimetre-accuracy claims.
+- A future external benchmark can use ScanNet++ colour imagery as input while withholding laser geometry and object annotations for evaluation. Measure surface distance and completeness over observed coverage, for example at 1, 2 and 5 cm, and object separation against its annotations. Disclose alignment and any scale fitting. This dataset has not been acquired or evaluated here, and does not replace Brennan's clip as the current development reference.
+
+Codex's visual review checks visible contradictions and supplies bounded revision findings. An independent testing agent owns repeatable calculations and live selection checks. Keep image similarity, geometric consistency, object separation and measured physical accuracy as separate results. Do not combine them into a score that hides a failed requirement. One repeatedly tuned video cannot establish performance in other homes.
+
+## Common geometry-to-object interface
+
+Recognize and track objects in the original video alongside geometry reconstruction. Do not depend on recognizing objects from an already degraded rendered world.
+
+Each reconstruction adapter must preserve original frame/timestamp references; camera intrinsics (the camera's projection parameters); camera positions and orientations with explicit coordinate conventions; per-view depth and validity/confidence where available; preprocessing coordinate maps; observed geometry; and scale status. Optional Gaussian appearance remains separate from the geometry used for selection and measurement. Normalize coordinate conventions explicitly rather than assuming every model exports the same camera transform.
+
+The proposed object path is category detection with Grounding DINO, followed by Segment Anything Model 2 (SAM 2) outlines and video tracking. Initial desk/chair point prompts provide an assisted baseline, not proof of automatic category recognition. Project masked depth into the shared room coordinates using the cameras. Merge observations only when visibility, depth and multiple views agree; retain ambiguous assignments as unknown. Keep people, glass reflections, chair and backpack distinct.
+
+Assign each accepted object a stable identifier, category/confidence, supporting source frames, observed geometry, selection bounds and scale/coverage status. Object selection should target the assigned geometry; a rectangular box alone can also enclose neighbouring objects. If using Gaussian appearance, associate visible Gaussian contributions with object identifiers using multi-view evidence. Hidden surfaces and missing object extents cannot be certified by filling holes.
+
+LingBot, DA3 and VGGT provide routes through camera/depth outputs. COLMAP first provides cameras and sparse feature points; dense reconstruction or another validated depth stage is needed for usable object surfaces. Splatfacto supplies Gaussian appearance and needs a separate ownership/geometry layer. 2D Gaussian Splatting supplies surface-oriented reconstruction with mesh export. Future ARCore capture can supply tracked cameras and depth with confidence, but still requires measured checks for drift and scale accuracy.
 
 ## Initial resource bounds
 
@@ -65,7 +92,13 @@ Checked 31 October 2026. Builders must pin the exact source/model versions used.
 - [SAM 2 video workflow](https://github.com/facebookresearch/sam2/blob/main/notebooks/video_predictor_example.ipynb)
 - [Gaussian rasterization](https://docs.gsplat.studio/main/apis/rasterization.html)
 - [ARCore Raw Depth](https://developers.google.com/ar/develop/java/depth/raw-depth)
-- [World Labs Atlas availability](https://www.worldlabs.ai/blog/atlas)
+- [COLMAP sparse and dense reconstruction](https://colmap.github.io/tutorial.html)
+- [COLMAP camera and point formats](https://colmap.github.io/format.html)
+- [Nerfstudio Splatfacto](https://docs.nerf.studio/nerfology/methods/splat.html)
+- [2D Gaussian Splatting training and mesh export](https://github.com/hbb1/2d-gaussian-splatting#testing)
+- [VGGT Omega checkpoint access](https://github.com/facebookresearch/vggt-omega#pretrained-models)
+- [Grounding DINO category detection](https://github.com/IDEA-Research/GroundingDINO)
+- [ScanNet++ data and evaluation](https://scannetpp.mlsg.cit.tum.de/scannetpp/)
 - [Slurm batch jobs](https://slurm.schedmd.com/sbatch.html)
 - [Slurm job steps](https://slurm.schedmd.com/srun.html)
 
