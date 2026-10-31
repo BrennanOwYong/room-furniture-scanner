@@ -1,0 +1,8 @@
+# Execution and review
+
+- All coding work performed on the PE node, including GPU jobs, testing and deployment, must use the HNA Code orchestrator. Do not replace it with independently launched coding agents or unmanaged job submission. Local analysis and supervisor review may prepare HNA requirements and inspect returned artifacts.
+- Use the original user video as the fixed development reference. Read VIDEO-REFERENCE.md. Inspect every source frame for coverage; preserve actual timestamps, source hash and camera preprocessing transforms. Never call this single-clip tuning a generalization benchmark or measured depth ground truth.
+- Keep world reconstruction and entity segmentation/selection as separate evaluated tasks. Gaussian appearance alone does not prove accurate geometry or selectable objects.
+- Every experiment needs a durable attempt identity, source/config/input/artifact digests, scheduler job IDs, objective test results and a supervisor visual verdict. Successful process exit is not visual acceptance. Feed specific failures into the next bounded attempt and preserve earlier evidence.
+- The user authorizes Codex to judge reconstruction fidelity against source frames. Product interaction taste still uses [USER-TEST] breakpoints. Deterministic checks belong to a separate Playwright-capable testing agent using real outputs and a live viewer when applicable.
+- Preserve others' changes. Give parallel builders explicit file ownership. Do not commit private recordings, extracted images, model weights, generated geometry, credentials or environment files. Research official documentation before implementing integrations and save exact reference links.

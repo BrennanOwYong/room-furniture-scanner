@@ -4,6 +4,8 @@ A research prototype for turning phone captures into an inspectable room with se
 
 Start with the [problem statement](PROBLEM-STATEMENT.md). This is code and experiment documentation, not a finished mobile app.
 
+The current investigation uses the [fixed video reference](VIDEO-REFERENCE.md) and [HNA iteration protocol](ITERATION-PROTOCOL.md). All PE coding and GPU experiments must run through HNA; see [execution instructions](AGENTS.md).
+
 ## Current state
 
 - LingBot-Map produces estimated depth and cameras from video.
