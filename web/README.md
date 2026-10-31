@@ -36,3 +36,13 @@ Official publishing references checked 31 October 2026:
 - https://docs.github.com/en/rest/repos/repos#create-a-repository-for-the-authenticated-user
 
 Official implementation references, feature review breakpoints and the verified source contract are in [PLAN.md](PLAN.md). Objective verification results are written separately by the independent testing agent; implementation alone is not a passing test.
+
+## Reconstruction and measurement limits checked 31 October 2026
+
+The current runner samples five frames per second, uses 64-slot windowed inference with eight overlapping keyframes, and retains two initial scale frames. It converts each predicted depth image into world points, keeps the upper half by per-frame depth confidence, thins the points for browser display, and clips extreme coordinate percentiles. It concatenates the surviving points and exports them directly. There is no additional multi-view consistency filter, surface fusion, or polygon meshing in this upload path. Noise, duplicated surfaces and missing geometry are therefore visible in the exported result. These settings describe the implementation; they do not establish which error dominates a particular room without an isolated comparison.
+
+Furniture detection examines up to 18 sampled views. For each image box it takes the middle 60 percent, uses the median of valid depth-derived points as a centre, and associates nearby centres by category. A label requires two views. It does not use an object segmentation mask or store object extents, and one physical item can receive multiple labels. Detector confidence is not measurement confidence.
+
+Reliable width, depth and height require both an object-specific 3D boundary and calibrated physical scale. One user-measured reference length can establish a global scale if its endpoints are reconstructed correctly; it cannot correct local distortion or reveal hidden dimensions. A future measurement flow should preserve incomplete dimensions, allow boundary correction, and validate against additional measurements before reporting accuracy. Do not reinterpret detection-box spread as furniture dimensions.
+
+References: https://github.com/Robbyant/lingbot-map ; https://github.com/IDEA-Research/GroundingDINO ; https://developers.google.com/ar/develop/depth . Google's depth-from-motion capture can use compatible phones without a dedicated depth sensor, but must be captured with the tracking/depth service rather than inferred to exist in an ordinary uploaded video.

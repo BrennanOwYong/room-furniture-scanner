@@ -1,6 +1,6 @@
 # LingBot Studio
 
-Local website for a phone recording -> LingBot room reconstruction -> furniture markers -> preview/download. User selected this computer and the existing NUS compute connection, 31 October 2026. No public hosting or paid service is needed.
+Local website for a phone recording -> LingBot room reconstruction -> furniture markers -> preview/download. User selected this computer and the existing NUS compute connection, 31 October 2026. The user subsequently requested a public GitHub Pages gallery of the three saved recordings; new processing remains local.
 
 ## Implementation
 
@@ -11,6 +11,7 @@ Local website for a phone recording -> LingBot room reconstruction -> furniture 
 5. Verify with an independent Playwright-capable agent against real processing and the live local website. Test upload, progress, model loading, markers/evidence, download, invalid input and retry. No mock success or cached sample masquerading as a fresh run.
 6. [USER-TEST] Upload, processing and result flow: after objective tests pass, ask the user to judge clarity and perceived wait using a runnable scenario card.
 7. [USER-TEST] Furniture markers: after objective association and selection checks pass, ask the user to judge whether the labels and supporting images are useful and understandable. This can share the same scenario card.
+8. [USER-TEST] Saved recording/result selectors and published gallery: open https://brennanowyong.github.io/room-furniture-scanner-demo/ ; switch recordings, compare the second recording's methods, and judge whether the menu labels and distinction between saved results and new processing feel clear. Independent tests cover actual rendering, download hashes, switching, keyboard access, mobile fit, and absence of compute-service requests on the public site.
 
 ## References checked 31 October 2026
 
